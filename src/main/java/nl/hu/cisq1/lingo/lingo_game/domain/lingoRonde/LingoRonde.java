@@ -43,11 +43,12 @@ public class LingoRonde {
         return countTries() >= 5 || string.equals(woord.getValue());
     }
 
-    public void addRaadBeurt(Word woord1){
-        if (!(countTries() != 5 || checkoltooid())){
-            Raadbeurt raadbeurt=new Raadbeurt(woord1.getValue());
+    public void addRaadBeurt(Word word){
+        if (countTries() == 5){
+            if (!checkoltooid()){
+            Raadbeurt raadbeurt=new Raadbeurt(word.getValue());
             raadbeurts.add(raadbeurt);
-        }
+        }}
 
     }
     public ArrayList<Character>calcWord(){
@@ -69,27 +70,9 @@ public class LingoRonde {
         return woord1;
     }
 
-    public void setWoord(Word woord) {
-        this.woord = woord;
-    }
-
-    public void setRaadbeurts(ArrayList<Raadbeurt> raadbeurts) {
-        this.raadbeurts = raadbeurts;
-    }
-
-    public Word getWoord() {
-        return woord;
-    }
 
     public List<Raadbeurt> getRaadbeurts() {
         return raadbeurts;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }
