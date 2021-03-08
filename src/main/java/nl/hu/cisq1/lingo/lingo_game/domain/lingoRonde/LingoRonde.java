@@ -69,6 +69,13 @@ public class LingoRonde {
         return woord1;
     }
 
+    public Word getWoord() {
+        return woord;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public List<Word> getRaadbeurts() {
         return raadbeurts;

@@ -9,7 +9,7 @@ import java.util.List;
 public interface LingorondeService {
     List<LingoRonde>findall();
     LingoRonde findById(Long id);
-    List<Raadbeurt>getRaadbeurts(LingoRonde lingoRonde);
+    List<Word>getRaadbeurts(LingoRonde lingoRonde);
     LingoRonde save(LingoRonde lingoRonde);
     LingoRonde update(LingoRonde lingoRonde);
     void delete(LingoRonde lingoRonde);

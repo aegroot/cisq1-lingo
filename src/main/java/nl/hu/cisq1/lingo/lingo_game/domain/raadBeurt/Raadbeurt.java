@@ -16,7 +16,6 @@ public class Raadbeurt {
 
             for (int i = 0; i < word.getValue().length(); i++) {
                 respons.add(Mark.INVALID);
-
             }
         } else {
 
