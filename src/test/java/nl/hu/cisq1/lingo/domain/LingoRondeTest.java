@@ -16,24 +16,6 @@ class LingoRondeTest {
     Word WoordTest3=new Word("klarinet");
 
 
-    @Test
-    void berekenPunten() {
-        LingoRonde lingoRonde=new LingoRonde(woord);
-        System.out.println(lingoRonde.calcWord());
-        lingoRonde.addRaadBeurt(woordTest1);
-        System.out.println(lingoRonde.calcWord());
-        lingoRonde.addRaadBeurt(woordTest2);
-        System.out.println(lingoRonde.calcWord());
-        lingoRonde.addRaadBeurt(WoordTest3);
-        System.out.println(lingoRonde.calcWord());
-        lingoRonde.addRaadBeurt(woord);
-        for(Raadbeurt raadbeurt: lingoRonde.getRaadbeurts()){
-            System.out.println(raadbeurt.compare(woord));
-
-        }
-        System.out.println(lingoRonde.berekenPunten());
-        System.out.println(lingoRonde.calcWord());
-    }
 
     @Test
     @DisplayName("round is done when the word is revealed")
@@ -68,6 +50,18 @@ class LingoRondeTest {
         LingoRonde lingoRonde=new LingoRonde(woord);
         lingoRonde.addRaadBeurt(woordTest2);
       assertFalse(lingoRonde.checkoltooid());
+    }
+    @Test
+    @DisplayName("round is done at 5 tries and the word is revealed")
+    void checkBoth(){
+        LingoRonde lingoRonde=new LingoRonde(woord);
+        lingoRonde.addRaadBeurt(woordTest1);
+        lingoRonde.addRaadBeurt(woordTest2);
+        lingoRonde.addRaadBeurt(woordTest2);
+        lingoRonde.addRaadBeurt(woordTest2);
+        lingoRonde.addRaadBeurt(woordTest2);
+        System.out.println(lingoRonde.calcWord());
+        assertTrue(lingoRonde.checkoltooid());
     }
 
 }

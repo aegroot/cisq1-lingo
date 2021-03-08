@@ -14,18 +14,19 @@ class RaadbeurtTest {
     @Test
     @DisplayName("wrong length")
     void compareInvalid() {
-        Raadbeurt raadbeurt=new Raadbeurt("test");
+        Word raadbeurt=new Word("test");
         Word word=new Word("where");
-        System.out.println(raadbeurt.compare(word));
-        assertSame(Mark.INVALID,raadbeurt.compare(word).get(0));
+        System.out.println(Raadbeurt.compare(word,raadbeurt));
+        assertSame(Mark.INVALID,Raadbeurt.compare(word,raadbeurt).get(0));
     }
     @Test
     @DisplayName("same word")
     void compareGood(){
-        Raadbeurt raadbeurt=new Raadbeurt("test");
+        Word raadbeurt=new Word("test");
         Word word=new Word("test");
-        raadbeurt.compare(word);
-        System.out.println(raadbeurt.compare(word));
+        Raadbeurt.compare(word,raadbeurt);
+        System.out.println(Raadbeurt.compare(word,raadbeurt));
     }
+
 
 }

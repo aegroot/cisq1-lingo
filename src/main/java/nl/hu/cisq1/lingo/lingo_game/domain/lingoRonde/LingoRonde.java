@@ -12,8 +12,8 @@ import java.util.List;
 public class LingoRonde {
     @ManyToOne
     private Word woord;
-    @OneToMany
-    private List<Raadbeurt> raadbeurts;
+    @ManyToMany
+    private List<Word> raadbeurts;
     @Id
     private Long id;
 
@@ -44,10 +44,9 @@ public class LingoRonde {
     }
 
     public void addRaadBeurt(Word word){
-        if (countTries() == 5){
+        if (countTries() < 5){
             if (!checkoltooid()){
-            Raadbeurt raadbeurt=new Raadbeurt(word.getValue());
-            raadbeurts.add(raadbeurt);
+            raadbeurts.add(word);
         }}
 
     }
@@ -55,8 +54,8 @@ public class LingoRonde {
         ArrayList<Character> woord1=new ArrayList<>();
         for (int i = 0; i < woord.getLength() ; i++) {
             ArrayList<Mark>resultaten=new ArrayList<>();
-            for (Raadbeurt raadbeurt:raadbeurts) {
-                Mark mark1 = raadbeurt.compare(woord).get(i);
+            for (Word raadbeurt:raadbeurts) {
+                Mark mark1 = Raadbeurt.compare(woord,raadbeurt).get(i);
                 resultaten.add(mark1);
             }
             if (resultaten.contains(Mark.CORRECT)){
@@ -71,7 +70,7 @@ public class LingoRonde {
     }
 
 
-    public List<Raadbeurt> getRaadbeurts() {
+    public List<Word> getRaadbeurts() {
         return raadbeurts;
     }
 
