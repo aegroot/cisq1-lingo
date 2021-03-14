@@ -16,8 +16,6 @@ public class LingoRonde {
     private List<Word> raadbeurts;
     @Id
     private Long id;
-
-
     public LingoRonde(Word woord){
         this.woord=woord;
         raadbeurts=new ArrayList<>();
@@ -72,6 +70,15 @@ public class LingoRonde {
     public Word getWoord() {
         return woord;
     }
+
+    public void setRaadbeurts(List<Word> raadbeurts) {
+        this.raadbeurts = raadbeurts;
+    }
+
+    public void setWoord(Word woord) {
+        this.woord = woord;
+    }
+
 
     public Long getId() {
         return id;

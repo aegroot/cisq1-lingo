@@ -49,6 +49,18 @@ public class LingorondeImpl implements LingorondeService {
 
     @Override
     public LingoRonde update(LingoRonde lingoRonde) {
+        Optional<LingoRonde>lingoRondedb=lingoRondeRepository.
+                findById(lingoRonde.getId());
+        if(lingoRondedb.isPresent()){
+            LingoRonde lingoRonde1=lingoRondedb.get();
+            lingoRonde1.setRaadbeurts(lingoRonde.getRaadbeurts());
+            lingoRonde1.setWoord(lingoRonde.getWoord());
+            return lingoRondeRepository.save(lingoRonde1);
+
+        }
+
+
+
         return null;
     }
 

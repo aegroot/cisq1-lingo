@@ -16,9 +16,11 @@ public class LingorondeController {
     public LingorondeController(LingorondeImpl service) {
         this.service = service;
     }
-    @PostMapping("/save")
-    public LingoRonde save(@RequestBody LingoRonde lingoRonde){
-        return  service.save(lingoRonde);
+
+    @PostMapping("/newronde")
+    public LingoRonde save(@RequestBody String word){
+        Word w1=new Word(word);
+        return  service.save(new LingoRonde(w1));
     }
     @GetMapping("/findall")
     public List<LingoRonde> findall()
@@ -29,29 +31,28 @@ public class LingorondeController {
         return  service.findById(id);
     }
 
-
     @PostMapping("/addraadbeurt")
-    public LingoRonde addRaadbeurt(@RequestBody Word woord, LingoRonde lingoRonde){
-        LingoRonde lingoRonde1=service.findById(lingoRonde.getId());
+    public LingoRonde addRaadbeurt(@RequestBody Word woord, Long id){
+        LingoRonde lingoRonde1=service.findById(id);
         lingoRonde1.addRaadBeurt(woord);
         return service.update(lingoRonde1);
     }
 
     @GetMapping("/berekenPunten")
-    public int berekenPunten(@RequestBody LingoRonde lingoRonde){
-        LingoRonde lingoRonde1=service.findById(lingoRonde.getId());
+    public int berekenPunten(@RequestBody Long id){
+        LingoRonde lingoRonde1=service.findById(id);
         return lingoRonde1.berekenPunten();
     }
     @GetMapping("calcWord")
-    public ArrayList<Character> calcWord(@RequestBody LingoRonde lingoRonde){
-        LingoRonde lingoRonde1=service.findById(lingoRonde.getId());
+    public ArrayList<Character> calcWord(@RequestBody Long id){
+        LingoRonde lingoRonde1=service.findById(id);
         return  lingoRonde1.calcWord();
-
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody LingoRonde lingoRonde) {
-        service.delete(lingoRonde);
+    public void delete(@RequestBody Long id) {
+
+        service.delete(service.findById(id));
     }
 
 }
