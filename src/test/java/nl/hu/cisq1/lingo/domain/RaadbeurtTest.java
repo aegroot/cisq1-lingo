@@ -26,6 +26,12 @@ class RaadbeurtTest {
         Word word=new Word("test");
         Raadbeurt.compare(word,raadbeurt);
         System.out.println(Raadbeurt.compare(word,raadbeurt));
+
+    }
+    @Test
+    @DisplayName("wrong word,good length")
+    void comparefase(){
+
     }
 
 

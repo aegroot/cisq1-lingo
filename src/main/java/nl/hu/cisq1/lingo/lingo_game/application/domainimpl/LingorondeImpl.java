@@ -28,7 +28,9 @@ public class LingorondeImpl implements LingorondeService {
 
     @Override
     public LingoRonde findById(Long id) {
-        return null;
+        Optional<LingoRonde>lingoRonde=lingoRondeRepository.findById(id);
+
+        return lingoRonde.orElse(null) ;
     }
 
     @Override

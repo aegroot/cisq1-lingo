@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class LingorondeImplTest {
     LingorondeService lingo=  mock(LingorondeImpl.class);
     LingoRonde lingoRonde=new LingoRonde(new Word("wagen"));
@@ -37,15 +39,11 @@ class LingorondeImplTest {
         lingoRonde.addRaadBeurt(new Word("maten"));
         lingoRondetemp.add(new Word("maten"));
         lingoRonde.addRaadBeurt(new Word("maken"));
-        System.out.println(lingoRondetemp);
-        System.out.println(lingoRonde.getRaadbeurts());
         when(lingo.update(lingoRonde)).thenReturn( lingoRonde);
         assertNotEquals(lingoRondetemp,
                 lingo.update(lingoRonde).getRaadbeurts());
         assertEquals(lingoRondetemp.get(0).getValue(),
                 lingoRonde.getRaadbeurts().get(0).getValue());
-
-
     }
 
     @Test
@@ -63,8 +61,4 @@ class LingorondeImplTest {
     public void delete(){
         lingo.delete(lingoRonde);
     }
-
-
-
-
     }
