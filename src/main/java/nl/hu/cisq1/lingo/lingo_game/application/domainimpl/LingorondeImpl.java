@@ -43,9 +43,9 @@ public class LingorondeImpl implements LingorondeService {
 
         return  null;
     }
-
     @Override
     public LingoRonde save(LingoRonde lingoRonde) {
+
         return lingoRondeRepository.save(lingoRonde);
     }
 

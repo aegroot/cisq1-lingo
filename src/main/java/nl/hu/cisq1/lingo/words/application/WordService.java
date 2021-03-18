@@ -16,6 +16,7 @@ public class WordService {
     }
 
     public String provideRandomWord(Integer length) {
+
         return this.wordRepository
                 .findRandomWordByLength(length)
                 .orElseThrow(() -> new WordLengthNotSupportedException(length))

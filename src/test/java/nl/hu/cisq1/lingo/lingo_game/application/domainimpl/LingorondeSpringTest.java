@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.lingo_game.application.domainimpl;
 
 
+import nl.hu.cisq1.lingo.lingo_game.domain.Mark;
 import nl.hu.cisq1.lingo.lingo_game.domain.lingoRonde.LingoRonde;
 import nl.hu.cisq1.lingo.lingo_game.domain.lingoRonde.SpringLingoRondeRepository;
 import nl.hu.cisq1.lingo.words.domain.Word;
@@ -40,10 +41,25 @@ public class LingorondeSpringTest {
     @Test
     @DisplayName("right wrong word, right length")
     public  void quesTestFalse(){
+        when(repository.findById(1L))
+                .thenReturn(Optional.of(new LingoRonde(new Word("aanvoer"))));
+        LingoRonde lingoRonde= service.findById(1L);
+        Word word=new Word("uitvoer");
+        lingoRonde.addRaadBeurt(word);
+        ArrayList<Character>list=new ArrayList<>();
+        list.add('a');
+        list.add(' ');
+        list.add(' ');
+        list.add('v');
+        list.add('o');
+        list.add('e');
+        list.add('r');
+        System.out.println(list.toString());
+        assertEquals(list,lingoRonde.calcWord());
 
     }
     @Test
-    @DisplayName("wrong word,wrond length")
+    @DisplayName("wrong word,wrong length")
     public  void quesTestInvalid(){
 
     }

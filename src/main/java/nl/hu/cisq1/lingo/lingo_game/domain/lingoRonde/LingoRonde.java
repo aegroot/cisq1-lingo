@@ -15,10 +15,13 @@ public class LingoRonde {
     @ManyToMany
     private List<Word> raadbeurts;
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     public LingoRonde(Word woord){
         this.woord=woord;
         raadbeurts=new ArrayList<>();
+        this.id= getId();
+
     }
 
     public LingoRonde() {
@@ -35,8 +38,6 @@ public class LingoRonde {
             sb.append(ch);
         }
         String string = sb.toString();
-
-
 
         return countTries() >= 5 || string.equals(woord.getValue());
     }
@@ -79,6 +80,9 @@ public class LingoRonde {
         this.woord = woord;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
