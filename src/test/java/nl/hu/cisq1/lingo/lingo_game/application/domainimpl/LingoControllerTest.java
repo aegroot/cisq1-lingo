@@ -20,17 +20,23 @@ public class LingoControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("new round, good length")
+    @DisplayName("new round")
     public void newRoundTest() throws Exception {
-        RequestBuilder request= MockMvcRequestBuilders.get("lingoronde/newronde/5");
+        RequestBuilder request= MockMvcRequestBuilders.post("/lingoronde/newronde/7");
         mockMvc.perform(request).andExpect(status().isOk());
     }
+
     @Test
-    @DisplayName("new round,invalid length")
-    public void newRoundTestWrongLength() throws Exception {
-        RequestBuilder request= MockMvcRequestBuilders.get("lingoronde/newronde/8");
+    @DisplayName("add raadbeurt")
+    public  void addRaarbeurtTest() throws Exception {
+        RequestBuilder request= MockMvcRequestBuilders
+                .post("/lingoronde/addraadbeurt")
+                .param("woord","maken")
+                .param("id",String.valueOf(5L));
         mockMvc.perform(request)
-                .andExpect(status().is(500));
+                .andExpect(status().isOk());
     }
+
+
 
 }

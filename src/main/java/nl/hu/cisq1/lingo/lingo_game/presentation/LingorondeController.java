@@ -4,6 +4,7 @@ import nl.hu.cisq1.lingo.lingo_game.application.domainimpl.LingorondeImpl;
 import nl.hu.cisq1.lingo.lingo_game.domain.lingoRonde.LingoRonde;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.words.domain.Word;
+import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class LingorondeController {
         this.wordService = wordService;
     }
     @PostMapping("/newronde/{length}")
-    public LingoRonde save(@PathVariable("length") int length){
+    public LingoRonde save(@PathVariable("length") int length) throws WordLengthNotSupportedException {
 
 
         String w1=wordService.provideRandomWord(length);
@@ -37,19 +38,19 @@ public class LingorondeController {
     }
 
     @PostMapping("/addraadbeurt")
-    public LingoRonde addRaadbeurt(@RequestBody Word woord, Long id){
+    public LingoRonde addRaadbeurt(@RequestParam("woord") String woord,@RequestParam("id")Long id){
         LingoRonde lingoRonde1=service.findById(id);
-        lingoRonde1.addRaadBeurt(woord);
+        lingoRonde1.addRaadBeurt(new Word(woord));
         return service.update(lingoRonde1);
     }
 
     @GetMapping("/berekenPunten")
-    public int berekenPunten(@RequestBody Long id){
+    public int berekenPunten(@RequestParam("id") Long id){
         LingoRonde lingoRonde1=service.findById(id);
         return lingoRonde1.berekenPunten();
     }
     @GetMapping("calcWord")
-    public ArrayList<Character> calcWord(@RequestBody Long id){
+    public ArrayList<Character> calcWord(@RequestParam("id") Long id){
         LingoRonde lingoRonde1=service.findById(id);
         return  lingoRonde1.calcWord();
     }
