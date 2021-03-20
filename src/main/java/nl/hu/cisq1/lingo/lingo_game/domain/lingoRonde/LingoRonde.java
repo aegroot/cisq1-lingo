@@ -13,7 +13,7 @@ public class LingoRonde {
     @ManyToOne
     private Word woord;
     @ManyToMany
-    private List<Word> raadbeurts;
+    private List<Raadbeurt> raadbeurts;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -23,7 +23,6 @@ public class LingoRonde {
         this.id= getId();
 
     }
-
     public LingoRonde() {
     }
 
@@ -32,29 +31,30 @@ public class LingoRonde {
     public int berekenPunten(){
         return 5*(5- raadbeurts.size()+5);
     }
+
     public boolean checkoltooid(){
         StringBuilder sb = new StringBuilder();
         for (Character ch : calcWord()) {
             sb.append(ch);
         }
         String string = sb.toString();
-
         return countTries() >= 5 || string.equals(woord.getValue());
     }
 
     public void addRaadBeurt(Word word){
         if (countTries() < 5){
             if (!checkoltooid()){
-            raadbeurts.add(word);
+            raadbeurts.add(new Raadbeurt(word.getValue(),this));
         }}
 
     }
+
     public ArrayList<Character>calcWord(){
         ArrayList<Character> woord1=new ArrayList<>();
         for (int i = 0; i < woord.getLength() ; i++) {
             ArrayList<Mark>resultaten=new ArrayList<>();
-            for (Word raadbeurt:raadbeurts) {
-                Mark mark1 = Raadbeurt.compare(woord,raadbeurt).get(i);
+            for (Raadbeurt raadbeurt:raadbeurts) {
+                Mark mark1 = Raadbeurt.compare(woord,new Word(raadbeurt.getIngev_woord())).get(i);
                 resultaten.add(mark1);
             }
             if (resultaten.contains(Mark.CORRECT)){
@@ -72,7 +72,7 @@ public class LingoRonde {
         return woord;
     }
 
-    public void setRaadbeurts(List<Word> raadbeurts) {
+    public void setRaadbeurts(List<Raadbeurt> raadbeurts) {
         this.raadbeurts = raadbeurts;
     }
 
@@ -88,7 +88,7 @@ public class LingoRonde {
         return id;
     }
 
-    public List<Word> getRaadbeurts() {
+    public List<Raadbeurt> getRaadbeurts() {
         return raadbeurts;
     }
 

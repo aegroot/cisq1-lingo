@@ -31,7 +31,7 @@ public class LingoControllerTest {
     public  void addRaarbeurtTest() throws Exception {
         RequestBuilder request= MockMvcRequestBuilders
                 .post("/lingoronde/addraadbeurt")
-                .param("woord","maken")
+                .param("woord","aaaaa")
                 .param("id",String.valueOf(5L));
         mockMvc.perform(request)
                 .andExpect(status().isOk());

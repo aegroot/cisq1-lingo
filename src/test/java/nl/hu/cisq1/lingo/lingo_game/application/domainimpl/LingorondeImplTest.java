@@ -43,8 +43,10 @@ class LingorondeImplTest {
         assertNotEquals(lingoRondetemp,
                 lingo.update(lingoRonde).getRaadbeurts());
         assertEquals(lingoRondetemp.get(0).getValue(),
-                lingoRonde.getRaadbeurts().get(0).getValue());
+                lingoRonde.getRaadbeurts().get(0).getIngev_woord());
     }
+
+
 
     @Test
     @DisplayName("findAll")

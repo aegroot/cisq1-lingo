@@ -3,6 +3,8 @@ package nl.hu.cisq1.lingo.lingo_game.application.domainimpl;
 import nl.hu.cisq1.lingo.lingo_game.application.domainService.LingorondeService;
 import nl.hu.cisq1.lingo.lingo_game.domain.lingoRonde.LingoRonde;
 import nl.hu.cisq1.lingo.lingo_game.domain.lingoRonde.SpringLingoRondeRepository;
+import nl.hu.cisq1.lingo.lingo_game.domain.raadBeurt.Raadbeurt;
+import nl.hu.cisq1.lingo.lingo_game.domain.raadBeurt.SpringRaadbeurtRepository;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Transactional
 @Service
 public class LingorondeImpl implements LingorondeService {
+
     private SpringLingoRondeRepository lingoRondeRepository;
 
     public LingorondeImpl(SpringLingoRondeRepository lingoRondeRepository) {
@@ -34,13 +37,12 @@ public class LingorondeImpl implements LingorondeService {
     }
 
     @Override
-    public List<Word> getRaadbeurts(LingoRonde lingoRonde) {
+    public List<Raadbeurt> getRaadbeurts(LingoRonde lingoRonde) {
         Optional<LingoRonde> rondeOptional=lingoRondeRepository.findById(lingoRonde.getId());
         if (rondeOptional.isPresent()){
         LingoRonde lingoRonde1=rondeOptional.get();
             return lingoRonde1.getRaadbeurts();
         }
-
         return  null;
     }
 

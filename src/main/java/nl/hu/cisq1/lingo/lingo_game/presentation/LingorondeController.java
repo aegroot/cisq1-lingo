@@ -1,7 +1,9 @@
 package nl.hu.cisq1.lingo.lingo_game.presentation;
 
 import nl.hu.cisq1.lingo.lingo_game.application.domainimpl.LingorondeImpl;
+import nl.hu.cisq1.lingo.lingo_game.application.domainimpl.RaadbeurtImpl;
 import nl.hu.cisq1.lingo.lingo_game.domain.lingoRonde.LingoRonde;
+import nl.hu.cisq1.lingo.lingo_game.domain.raadBeurt.Raadbeurt;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
@@ -15,10 +17,12 @@ import java.util.List;
 public class LingorondeController {
    private final LingorondeImpl service;
    private  final WordService wordService;
+   private final RaadbeurtImpl raadbeurtservice;
 
-    public LingorondeController(LingorondeImpl service, WordService wordService) {
+    public LingorondeController(LingorondeImpl service, WordService wordService, RaadbeurtImpl raadbeurtservice) {
         this.service = service;
         this.wordService = wordService;
+        this.raadbeurtservice = raadbeurtservice;
     }
     @PostMapping("/newronde/{length}")
     public LingoRonde save(@PathVariable("length") int length) throws WordLengthNotSupportedException {
@@ -38,10 +42,10 @@ public class LingorondeController {
     }
 
     @PostMapping("/addraadbeurt")
-    public LingoRonde addRaadbeurt(@RequestParam("woord") String woord,@RequestParam("id")Long id){
+    public Raadbeurt addRaadbeurt(@RequestParam("woord") String woord, @RequestParam("id")Long id){
         LingoRonde lingoRonde1=service.findById(id);
         lingoRonde1.addRaadBeurt(new Word(woord));
-        return service.update(lingoRonde1);
+        return raadbeurtservice.save(woord,lingoRonde1);
     }
 
     @GetMapping("/berekenPunten")
@@ -54,10 +58,13 @@ public class LingorondeController {
         LingoRonde lingoRonde1=service.findById(id);
         return  lingoRonde1.calcWord();
     }
+    @GetMapping("getRaadbeurts")
+    public List<Raadbeurt>getraadbeurts(@RequestParam("id") Long id) {
+        LingoRonde lingoRonde=service.findById(id);
+        return  service.getRaadbeurts(lingoRonde);}
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody Long id) {
-
+    public void delete(@RequestParam("id") Long id) {
         service.delete(service.findById(id));
     }
 
