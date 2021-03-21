@@ -61,8 +61,24 @@ public class LingoSpel {
         return currentLength;
     }
 
+    public void setCurrentRound(LingoRonde currentRound) {
+        this.currentRound = currentRound;
+    }
+
+    public void setLingoRondes(List<LingoRonde> lingoRondes) {
+        this.lingoRondes = lingoRondes;
+    }
+
     public void setCurrentLength(int currentLength) {
         this.currentLength = currentLength;
+    }
+
+    public List<LingoRonde> getLingoRondes() {
+        return lingoRondes;
+    }
+
+    public LingoRonde getCurrentRound() {
+        return currentRound;
     }
 
     @Id
