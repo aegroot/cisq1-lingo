@@ -24,6 +24,10 @@ public class Raadbeurt {
         this.lingoRonde=lingoRonde;
     }
 
+    public Raadbeurt() {
+
+    }
+
 
     public static List<Mark> compare(Word woord, Word word) {
         ArrayList<Mark> respons = new ArrayList<>();

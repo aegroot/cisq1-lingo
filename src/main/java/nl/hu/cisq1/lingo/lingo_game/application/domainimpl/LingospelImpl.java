@@ -30,8 +30,6 @@ public class LingospelImpl implements LingospelService {
         if(optional.isPresent()){
             LingoSpel lingoSpel1=optional.get();
             lingoSpel1.setLingoRondes(lingoSpel.getLingoRondes());
-            lingoSpel1.setCurrentRound(lingoSpel1.getCurrentRound());
-            lingoSpel1.setCurrentLength(lingoSpel.getCurrentLength());
             return  repository.save(lingoSpel1);
         }
         return null;

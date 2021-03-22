@@ -9,25 +9,25 @@ import java.util.List;
 
 @Entity
 public class LingoSpel {
-    @OneToMany
+    @OneToMany(mappedBy = "spel")
     private List<LingoRonde> lingoRondes;
-    private int currentLength;
-    @OneToOne
-    private LingoRonde currentRound;
     private Long id;
 
     public LingoSpel(LingoRonde lingoRonde){
         this.lingoRondes=new ArrayList<>();
         this.lingoRondes.add(lingoRonde);
-        this.currentLength=5;
+    }
+    public int currentLength(){
+        if (lingoRondes.isEmpty()){return  5;}
+        else return  lingoRondes.get(lingoRondes.size()-1).getWoord().getLength();
     }
 
     public LingoSpel() {
     }
 
+
     public boolean addLingoRonde(LingoRonde lingoRonde){
-        if(currentLength==lingoRonde.getWoord().getLength()){
-            currentLength=nextLength();
+        if(currentLength()==lingoRonde.getWoord().getLength()){
             lingoRondes.add(lingoRonde); return  true;
         }
         return  false;
@@ -44,9 +44,9 @@ public class LingoSpel {
 
     public int nextLength(){
 
-        if(currentLength==5){return  6;}
-        else  if(currentLength==6){return  7;}
-        else  if(currentLength==7){return  5;}
+        if(currentLength()==5){return  6;}
+        else  if(currentLength()==6){return  7;}
+        else  if(currentLength()==7){return  5;}
          return 5;
 
 
@@ -57,29 +57,17 @@ public class LingoSpel {
         this.id = id;
     }
 
-    public int getCurrentLength() {
-        return currentLength;
-    }
 
-    public void setCurrentRound(LingoRonde currentRound) {
-        this.currentRound = currentRound;
-    }
+
 
     public void setLingoRondes(List<LingoRonde> lingoRondes) {
         this.lingoRondes = lingoRondes;
-    }
-
-    public void setCurrentLength(int currentLength) {
-        this.currentLength = currentLength;
     }
 
     public List<LingoRonde> getLingoRondes() {
         return lingoRondes;
     }
 
-    public LingoRonde getCurrentRound() {
-        return currentRound;
-    }
 
     @Id
     @GeneratedValue
