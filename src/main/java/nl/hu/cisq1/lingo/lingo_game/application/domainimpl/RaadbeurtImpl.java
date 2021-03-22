@@ -23,5 +23,10 @@ public class RaadbeurtImpl implements RaadbeurtService {
         return repository.save(new Raadbeurt(woord, lingoRonde));
     }
 
+    @Override
+    public void delete(Raadbeurt raadbeurt) {
+        repository.delete(raadbeurt);
+    }
+
 
 }

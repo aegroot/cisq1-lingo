@@ -1,4 +1,4 @@
-package nl.hu.cisq1.lingo.lingo_game.application.domainimpl;
+package nl.hu.cisq1.lingo.lingo_game.presentation;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

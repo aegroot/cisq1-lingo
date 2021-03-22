@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RaadbeurtService {
     Raadbeurt save(String woord, LingoRonde lingoRonde);
+    void delete(Raadbeurt raadbeurt);
 }
