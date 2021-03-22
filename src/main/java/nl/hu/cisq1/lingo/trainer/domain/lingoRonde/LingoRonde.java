@@ -11,9 +11,9 @@ import java.util.List;
 
 @Entity(name = "lingoronde")
 public class LingoRonde {
-    @ManyToOne( cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "spel_id")
-    private LingoSpel lingospel;
+    private LingoSpel lingogame;
     @ManyToOne
     private Word woord;
     @ManyToMany
@@ -23,23 +23,25 @@ public class LingoRonde {
     private Long id;
 
 
-    public LingoRonde(Word woord){
-        this.woord=woord;
-        raadbeurts=new ArrayList<>();
-        this.id= getId();
+    public LingoRonde(Word woord) {
+        this.woord = woord;
+        raadbeurts = new ArrayList<>();
+        this.id = getId();
 
     }
 
     public LingoRonde() {
     }
 
-    private int countTries(){return  raadbeurts.size();}
-
-    public int berekenPunten(){
-        return 5*(5- raadbeurts.size()+5);
+    private int countTries() {
+        return raadbeurts.size();
     }
 
-    public boolean checkoltooid(){
+    public int berekenPunten() {
+        return 5 * (5 - raadbeurts.size() + 5);
+    }
+
+    public boolean checkoltooid() {
         StringBuilder sb = new StringBuilder();
         for (Character ch : calcWord()) {
             sb.append(ch);
@@ -48,38 +50,40 @@ public class LingoRonde {
         return countTries() >= 5 || string.equals(woord.getValue());
     }
 
-    public void addRaadBeurt(Word word){
-        if (countTries() < 5){
-            if (!checkoltooid()){
-            raadbeurts.add(new Raadbeurt(word.getValue(),this));
-        }}
-
-    }
-
-    public ArrayList<Character>calcWord(){
-        ArrayList<Character> woord1=new ArrayList<>();
-        for (int i = 0; i < woord.getLength() ; i++) {
-            ArrayList<Mark>resultaten=new ArrayList<>();
-            for (Raadbeurt raadbeurt:raadbeurts) {
-                Mark mark1 = Raadbeurt.compare(woord,new Word(raadbeurt.getIngeven_woord())).get(i);
-                resultaten.add(mark1);
+    public void addRaadBeurt(Word word) {
+        if (countTries() < 5) {
+            if (!checkoltooid()) {
+                raadbeurts.add(new Raadbeurt(word.getValue(), this));
             }
-            if (resultaten.contains(Mark.CORRECT)){
-                woord1.add(woord.getValue().charAt(i));
-            }
-            else {
-                woord1.add(' ');}
         }
 
-        woord1.set(0,woord.getValue().charAt(0));
-        return woord1;
-    }
-    public void setLingospel(LingoSpel lingospel) {
-        this.lingospel = lingospel;
     }
 
-    public LingoSpel getLingospel() {
-        return lingospel;
+    public ArrayList<Character> calcWord() {
+        ArrayList<Character> woord1 = new ArrayList<>();
+        for (int i = 0; i < woord.getLength(); i++) {
+            ArrayList<Mark> resultaten = new ArrayList<>();
+            for (Raadbeurt raadbeurt : raadbeurts) {
+                Mark mark1 = Raadbeurt.compare(woord, new Word(raadbeurt.getIngeven_woord())).get(i);
+                resultaten.add(mark1);
+            }
+            if (resultaten.contains(Mark.CORRECT)) {
+                woord1.add(woord.getValue().charAt(i));
+            } else {
+                woord1.add(' ');
+            }
+        }
+
+        woord1.set(0, woord.getValue().charAt(0));
+        return woord1;
+    }
+
+    public void setLingogame(LingoSpel lingospel) {
+        this.lingogame = lingospel;
+    }
+
+    public LingoSpel getLingogame() {
+        return lingogame;
     }
 
     public Word getWoord() {

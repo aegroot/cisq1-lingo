@@ -15,7 +15,7 @@ public class RaadbeurtImpl implements RaadbeurtService {
     private final SpringRaadbeurtRepository repository;
 
     public RaadbeurtImpl(SpringRaadbeurtRepository springRaadbeurtRepository) {
-        this.repository=springRaadbeurtRepository;
+        this.repository = springRaadbeurtRepository;
     }
 
     @Override

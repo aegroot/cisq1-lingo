@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("lingospel")
 public class LingospelController {
     private final WordService wordService;
-    private  final LingorondeImpl lingorondeservice;
+    private final LingorondeImpl lingorondeservice;
     private final LingospelImpl service;
 
     public LingospelController(WordService wordService, LingorondeImpl lingorondeservice, LingospelImpl service) {
@@ -25,21 +25,21 @@ public class LingospelController {
 
 
     @PostMapping("create")
-    public LingoSpel newlingospel(){
-        LingoRonde ronde=new LingoRonde(new Word(wordService.provideRandomWord(5)));
+    public LingoSpel newlingospel() {
+        LingoRonde ronde = new LingoRonde(new Word(wordService.provideRandomWord(5)));
         lingorondeservice.save(ronde);
         return service.save(new LingoSpel((ronde)));
     }
 
 
     @PostMapping("nextronde")
-    public LingoSpel nextronde(Long id){
-        LingoSpel spel=service.findbyid(id);
-        LingoRonde ronde=new LingoRonde(new Word(wordService.provideRandomWord(spel.nextLength())));
+    public LingoSpel nextronde(Long id) {
+        LingoSpel spel = service.findbyid(id);
+        LingoRonde ronde = new LingoRonde(new Word(wordService.provideRandomWord(spel.nextLength())));
         spel.addLingoRonde(ronde);
         lingorondeservice.save(ronde);
         service.update(spel);
-        return  spel;
+        return spel;
     }
 
 

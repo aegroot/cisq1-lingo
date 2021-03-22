@@ -19,10 +19,11 @@ public class Raadbeurt {
     private LingoRonde lingoRonde;
     private Long id;
 
-    public Raadbeurt(String woord,LingoRonde lingoRonde){
-        this.ingeven_woord =woord;
-        this.lingoRonde=lingoRonde;
+    public Raadbeurt(String woord, LingoRonde lingoRonde) {
+        this.ingeven_woord = woord;
+        this.lingoRonde = lingoRonde;
     }
+
     public Raadbeurt() {
 
     }

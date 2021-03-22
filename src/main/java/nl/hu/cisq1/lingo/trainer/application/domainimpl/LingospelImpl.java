@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class LingospelImpl implements LingospelService {
-    private  final SpringLingoSpelRepository repository;
+    private final SpringLingoSpelRepository repository;
 
     public LingospelImpl(SpringLingoSpelRepository repository) {
         this.repository = repository;
@@ -25,19 +25,19 @@ public class LingospelImpl implements LingospelService {
 
     @Override
     public LingoSpel update(LingoSpel lingoSpel) {
-        Optional<LingoSpel>optional=repository.findById(lingoSpel.getId());
-        if(optional.isPresent()){
-            LingoSpel lingoSpel1=optional.get();
+        Optional<LingoSpel> optional = repository.findById(lingoSpel.getId());
+        if (optional.isPresent()) {
+            LingoSpel lingoSpel1 = optional.get();
             lingoSpel1.setLingoRondes(lingoSpel.getLingoRondes());
-            return  repository.save(lingoSpel1);
+            return repository.save(lingoSpel1);
         }
         return null;
     }
 
     @Override
     public LingoSpel findbyid(Long id) {
-        Optional<LingoSpel>optional=repository.findById(id);
-       return optional.orElse(null);
+        Optional<LingoSpel> optional = repository.findById(id);
+        return optional.orElse(null);
 
     }
 

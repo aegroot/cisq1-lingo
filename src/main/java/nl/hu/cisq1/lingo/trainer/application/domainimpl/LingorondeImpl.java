@@ -29,19 +29,19 @@ public class LingorondeImpl implements LingorondeService {
 
     @Override
     public LingoRonde findById(Long id) {
-        Optional<LingoRonde>lingoRonde=lingoRondeRepository.findById(id);
+        Optional<LingoRonde> lingoRonde = lingoRondeRepository.findById(id);
 
-        return lingoRonde.orElse(null) ;
+        return lingoRonde.orElse(null);
     }
 
     @Override
     public List<Raadbeurt> getRaadbeurts(LingoRonde lingoRonde) {
-        Optional<LingoRonde> rondeOptional=lingoRondeRepository.findById(lingoRonde.getId());
-        if (rondeOptional.isPresent()){
-        LingoRonde lingoRonde1=rondeOptional.get();
+        Optional<LingoRonde> rondeOptional = lingoRondeRepository.findById(lingoRonde.getId());
+        if (rondeOptional.isPresent()) {
+            LingoRonde lingoRonde1 = rondeOptional.get();
             return lingoRonde1.getRaadbeurts();
         }
-        return  null;
+        return null;
     }
 
 
@@ -53,16 +53,15 @@ public class LingorondeImpl implements LingorondeService {
 
     @Override
     public LingoRonde update(LingoRonde lingoRonde) {
-        Optional<LingoRonde>lingoRondedb=lingoRondeRepository.
+        Optional<LingoRonde> lingoRondedb = lingoRondeRepository.
                 findById(lingoRonde.getId());
-        if(lingoRondedb.isPresent()){
-            LingoRonde lingoRonde1=lingoRondedb.get();
+        if (lingoRondedb.isPresent()) {
+            LingoRonde lingoRonde1 = lingoRondedb.get();
             lingoRonde1.setRaadbeurts(lingoRonde.getRaadbeurts());
             lingoRonde1.setWoord(lingoRonde.getWoord());
             return lingoRondeRepository.save(lingoRonde1);
 
         }
-
 
 
         return null;
@@ -76,13 +75,13 @@ public class LingorondeImpl implements LingorondeService {
 
     @Override
     public Word getWord(LingoRonde lingoRonde) {
-        Optional<LingoRonde> rondeOptional=lingoRondeRepository.findById(lingoRonde.getId());
-        if (rondeOptional.isPresent()){
-            LingoRonde lingoRonde1=rondeOptional.get();
+        Optional<LingoRonde> rondeOptional = lingoRondeRepository.findById(lingoRonde.getId());
+        if (rondeOptional.isPresent()) {
+            LingoRonde lingoRonde1 = rondeOptional.get();
             return lingoRonde1.getWoord();
         }
 
-        return  null;
+        return null;
 
     }
 }
