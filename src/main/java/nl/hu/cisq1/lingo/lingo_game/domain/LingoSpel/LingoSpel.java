@@ -7,7 +7,7 @@ import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "lingospel")
 public class LingoSpel {
     @OneToMany(mappedBy = "spel")
     private List<LingoRonde> lingoRondes;

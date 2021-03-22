@@ -23,6 +23,7 @@ public class LingoRonde {
         this.id= getId();
 
     }
+
     public LingoRonde() {
     }
 
