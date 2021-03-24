@@ -16,7 +16,7 @@ public class LingoRonde {
     private LingoSpel lingogame;
     @ManyToOne
     private Word woord;
-    @ManyToMany
+    @OneToMany
     private List<Raadbeurt> raadbeurts;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

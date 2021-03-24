@@ -10,6 +10,8 @@ import java.util.List;
 public class LingoSpel {
     @OneToMany(mappedBy = "lingogame", targetEntity = LingoRonde.class, fetch = FetchType.EAGER)
     private List<LingoRonde> lingoRondes;
+    @Id
+    @GeneratedValue
     private Long id;
 
     public LingoSpel(LingoRonde lingoRonde) {
@@ -75,9 +77,6 @@ public class LingoSpel {
         return lingoRondes;
     }
 
-
-    @Id
-    @GeneratedValue
     public Long getId() {
         return id;
     }
