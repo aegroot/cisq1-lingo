@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LingoSpelTest {
+class LingoSpelServicelTest {
     LingoRonde r1;
     LingoSpel spel;
 

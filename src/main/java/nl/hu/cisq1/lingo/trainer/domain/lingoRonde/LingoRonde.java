@@ -39,7 +39,15 @@ public class LingoRonde {
     }
 
     public int berekenPunten() {
-        return 5 * (5 - raadbeurts.size() + 5);
+        List<Raadbeurt> mockraadbeurts=new ArrayList<>();
+        for(Raadbeurt raadbeurt:this.raadbeurts){
+            mockraadbeurts.add(raadbeurt);
+            if(raadbeurt.getIngeven_woord() == woord.getValue()){
+                break;
+            }
+        }
+
+        return 5 * (5 - mockraadbeurts.size() )+5;
     }
 
     public boolean checkvoltooid() {

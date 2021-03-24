@@ -83,7 +83,7 @@ public class Raadbeurt {
     public String toString() {
         return "Raadbeurt{" +
                 "ingev_woord='" + ingeven_woord + '\'' +
-                ", lingoRonde=" + lingoRonde +
+                //", lingoRonde=" + lingoRonde +
                 '}';
     }
 }

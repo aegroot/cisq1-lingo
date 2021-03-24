@@ -11,19 +11,19 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class LingospelImpl implements LingospelService {
+public class LingospelImpl{
     private final SpringLingoSpelRepository repository;
 
     public LingospelImpl(SpringLingoSpelRepository repository) {
         this.repository = repository;
     }
 
-    @Override
+
     public LingoSpel save(LingoSpel lingospel) {
         return repository.save(lingospel);
     }
 
-    @Override
+
     public LingoSpel update(LingoSpel lingoSpel) {
         Optional<LingoSpel> optional = repository.findById(lingoSpel.getId());
         if (optional.isPresent()) {
@@ -34,19 +34,20 @@ public class LingospelImpl implements LingospelService {
         return null;
     }
 
-    @Override
+
     public LingoSpel findbyid(Long id) {
         Optional<LingoSpel> optional = repository.findById(id);
         return optional.orElse(null);
 
     }
 
-    @Override
+
+
+
     public List<LingoSpel> findall() {
         return repository.findAll();
     }
 
-    @Override
     public void delete(LingoSpel lingoSpel) {
         repository.delete(lingoSpel);
 
