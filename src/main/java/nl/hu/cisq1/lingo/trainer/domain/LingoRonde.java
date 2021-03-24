@@ -1,8 +1,5 @@
-package nl.hu.cisq1.lingo.trainer.domain.lingoRonde;
+package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.LingoSpel;
-import nl.hu.cisq1.lingo.trainer.domain.Mark;
-import nl.hu.cisq1.lingo.trainer.domain.raadBeurt.Raadbeurt;
 import nl.hu.cisq1.lingo.words.domain.Word;
 
 import javax.persistence.*;
@@ -12,12 +9,9 @@ import java.util.List;
 @Entity(name = "lingoronde")
 public class LingoRonde {
     @ManyToOne
-    @JoinColumn(name = "spel_id")
-    private LingoSpel lingogame;
-    @ManyToOne
     private Word woord;
     @ManyToMany
-    private List<Raadbeurt> raadbeurts;
+    private List<LingoRaadbeurt> raadbeurts;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -53,7 +47,7 @@ public class LingoRonde {
     public void addRaadBeurt(Word word) {
         if (countTries() < 5) {
             if (!checkoltooid()) {
-                raadbeurts.add(new Raadbeurt(word.getValue(), this));
+                raadbeurts.add(new LingoRaadbeurt(word.getValue(), this));
             }
         }
 
@@ -63,8 +57,8 @@ public class LingoRonde {
         ArrayList<Character> woord1 = new ArrayList<>();
         for (int i = 0; i < woord.getLength(); i++) {
             ArrayList<Mark> resultaten = new ArrayList<>();
-            for (Raadbeurt raadbeurt : raadbeurts) {
-                Mark mark1 = Raadbeurt.compare(woord, new Word(raadbeurt.getIngeven_woord())).get(i);
+            for (LingoRaadbeurt raadbeurt : raadbeurts) {
+                Mark mark1 = LingoRaadbeurt.compare(woord, new Word(raadbeurt.getIngeven_woord())).get(i);
                 resultaten.add(mark1);
             }
             if (resultaten.contains(Mark.CORRECT)) {
@@ -78,19 +72,14 @@ public class LingoRonde {
         return woord1;
     }
 
-    public void setLingogame(LingoSpel lingospel) {
-        this.lingogame = lingospel;
-    }
 
-    public LingoSpel getLingogame() {
-        return lingogame;
-    }
+
 
     public Word getWoord() {
         return woord;
     }
 
-    public void setRaadbeurts(List<Raadbeurt> raadbeurts) {
+    public void setRaadbeurts(List<LingoRaadbeurt> raadbeurts) {
         this.raadbeurts = raadbeurts;
     }
 
@@ -106,7 +95,7 @@ public class LingoRonde {
         return id;
     }
 
-    public List<Raadbeurt> getRaadbeurts() {
+    public List<LingoRaadbeurt> getRaadbeurts() {
         return raadbeurts;
     }
 

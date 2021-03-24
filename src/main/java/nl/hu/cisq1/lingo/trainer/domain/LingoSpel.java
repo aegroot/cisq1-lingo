@@ -1,19 +1,24 @@
-package nl.hu.cisq1.lingo.trainer.domain.LingoSpel;
+package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
+import nl.hu.cisq1.lingo.trainer.domain.LingoRonde;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "lingospel")
+@Entity
 public class LingoSpel {
-    @OneToMany(mappedBy = "lingogame", targetEntity = LingoRonde.class, fetch = FetchType.EAGER)
-    private List<LingoRonde> lingoRondes;
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<LingoRonde> lingoRondes = new ArrayList<>();
+
+
     public LingoSpel(LingoRonde lingoRonde) {
-        this.lingoRondes = new ArrayList<>();
         this.lingoRondes.add(lingoRonde);
     }
 
@@ -73,12 +78,5 @@ public class LingoSpel {
 
     public List<LingoRonde> getLingoRondes() {
         return lingoRondes;
-    }
-
-
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
     }
 }

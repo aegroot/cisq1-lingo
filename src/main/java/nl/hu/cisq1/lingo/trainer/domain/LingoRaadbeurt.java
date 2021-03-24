@@ -1,7 +1,7 @@
-package nl.hu.cisq1.lingo.trainer.domain.raadBeurt;
+package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
-import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
+import nl.hu.cisq1.lingo.trainer.domain.LingoRonde;
 import nl.hu.cisq1.lingo.words.domain.Word;
 
 import javax.persistence.Entity;
@@ -13,18 +13,18 @@ import java.util.List;
 
 
 @Entity
-public class Raadbeurt {
+public class LingoRaadbeurt {
     private String ingeven_woord;
     @OneToOne
     private LingoRonde lingoRonde;
     private Long id;
 
-    public Raadbeurt(String woord, LingoRonde lingoRonde) {
+    public LingoRaadbeurt(String woord, LingoRonde lingoRonde) {
         this.ingeven_woord = woord;
         this.lingoRonde = lingoRonde;
     }
 
-    public Raadbeurt() {
+    public LingoRaadbeurt() {
 
     }
 
