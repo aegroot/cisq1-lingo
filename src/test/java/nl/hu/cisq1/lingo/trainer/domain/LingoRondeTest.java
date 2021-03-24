@@ -4,6 +4,7 @@ import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,7 +15,7 @@ class LingoRondeTest {
     Word woordTest2=new Word("meets");
     Word WoordTest3=new Word("klarinet");
 
-
+    @ParameterizedTest
 
     @Test
     @DisplayName("round is done when the word is revealed")
@@ -22,7 +23,7 @@ class LingoRondeTest {
         LingoRonde lingoRonde=new LingoRonde(woord);
         lingoRonde.addRaadBeurt(woordTest1);
         System.out.println(lingoRonde.calcWord());
-        assertTrue(lingoRonde.checkoltooid());
+        assertTrue(lingoRonde.checkvoltooid());
     }
     @Test
     @DisplayName("round is not done if the word is  not revealed")
@@ -30,7 +31,7 @@ class LingoRondeTest {
         LingoRonde lingoRonde=new LingoRonde(woord);
         lingoRonde.addRaadBeurt(woordTest2);
         System.out.println(lingoRonde.calcWord());
-        assertFalse(lingoRonde.checkoltooid());
+        assertFalse(lingoRonde.checkvoltooid());
     }
     @Test
     @DisplayName("round is done when the player tred 5 times")
@@ -41,15 +42,16 @@ class LingoRondeTest {
         lingoRonde.addRaadBeurt(woordTest2);
         lingoRonde.addRaadBeurt(woordTest2);
         lingoRonde.addRaadBeurt(woordTest2);
-        assertTrue(lingoRonde.checkoltooid());
+        assertTrue(lingoRonde.checkvoltooid());
     }
     @Test
     @DisplayName("round is done when the player tried 5 times")
     void checklessthan5tries(){
         LingoRonde lingoRonde=new LingoRonde(woord);
         lingoRonde.addRaadBeurt(woordTest2);
-      assertFalse(lingoRonde.checkoltooid());
+      assertFalse(lingoRonde.checkvoltooid());
     }
+
     @Test
     @DisplayName("round is done at 5 tries and the word is revealed")
     void checkBoth(){
@@ -60,7 +62,7 @@ class LingoRondeTest {
         lingoRonde.addRaadBeurt(woordTest2);
         lingoRonde.addRaadBeurt(woordTest2);
         System.out.println(lingoRonde.calcWord());
-        assertTrue(lingoRonde.checkoltooid());
+        assertTrue(lingoRonde.checkvoltooid());
     }
 
 }

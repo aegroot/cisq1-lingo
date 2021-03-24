@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain.lingoRonde;
 
 import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.LingoSpel;
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
+import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.exception.FinishedException;
 import nl.hu.cisq1.lingo.trainer.domain.raadBeurt.Raadbeurt;
 import nl.hu.cisq1.lingo.words.domain.Word;
 
@@ -41,18 +42,25 @@ public class LingoRonde {
         return 5 * (5 - raadbeurts.size() + 5);
     }
 
-    public boolean checkoltooid() {
+    public boolean checkvoltooid() {
         StringBuilder sb = new StringBuilder();
         for (Character ch : calcWord()) {
             sb.append(ch);
         }
         String string = sb.toString();
-        return countTries() >= 5 || string.equals(woord.getValue());
+
+        for (Raadbeurt raadbeurt:raadbeurts) {
+            if (raadbeurt.getIngeven_woord()==woord.getValue()){return  true;}
+        }
+        return countTries() >= 5;
     }
 
     public void addRaadBeurt(Word word) {
+        if (checkvoltooid()){
+            throw new FinishedException();
+        }
         if (countTries() < 5) {
-            if (!checkoltooid()) {
+            if (!checkvoltooid()) {
                 raadbeurts.add(new Raadbeurt(word.getValue(), this));
             }
         }

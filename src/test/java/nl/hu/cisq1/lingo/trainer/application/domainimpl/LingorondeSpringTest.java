@@ -33,7 +33,7 @@ public class LingorondeSpringTest {
         LingoRonde lingoRonde= service.findById(1L);
         Word word=new Word("aanvoer");
         lingoRonde.addRaadBeurt(word);
-        assertTrue(lingoRonde.checkoltooid());
+        assertTrue(lingoRonde.checkvoltooid());
 
     }
     @Test
