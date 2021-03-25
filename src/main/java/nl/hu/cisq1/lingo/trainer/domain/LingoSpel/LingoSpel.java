@@ -22,7 +22,7 @@ public class LingoSpel {
         this.lingoRondes.add(lingoRonde);
     }
 
-    private int currentLength() {
+    public int currentLength() {
         if (lingoRondes.isEmpty()) {
             return 5;
         } else return lingoRondes.get(lingoRondes.size() - 1).getWoord().getLength();

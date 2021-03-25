@@ -46,7 +46,6 @@ public class LingoRonde {
                 break;
             }
         }
-
         return 5 * (5 - mockraadbeurts.size() )+5;
     }
 
