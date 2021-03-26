@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain.LingoSpel;
 
+import nl.hu.cisq1.lingo.trainer.domain.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.MockLingoRonde;
 import nl.hu.cisq1.lingo.trainer.domain.raadBeurt.MockRaadbeurt;
@@ -25,9 +26,10 @@ public class Voortgang {
             String string = sb.toString();
             List<MockRaadbeurt>mockRaadbeurts=new ArrayList<>();
             for(Raadbeurt raadbeurt:lingoRonde.getRaadbeurts()){
-                mockRaadbeurts.add(new MockRaadbeurt(lingoRonde.getWoord().getValue(),
-                        Raadbeurt.compare(new Word(lingoRonde.getWoord().getValue()),
-                                new Word(raadbeurt.getIngeven_woord()))));
+                List<Mark> marks=Raadbeurt.compare(new Word(lingoRonde.getWoord().getValue()),
+                        new Word(raadbeurt.getIngeven_woord()));
+                mockRaadbeurts.add(new MockRaadbeurt(
+                        raadbeurt.getIngeven_woord(), marks));
             }
 
          mockLingoRondes.add(new MockLingoRonde(mockRaadbeurts,string,lingoRonde.berekenPunten()));

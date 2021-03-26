@@ -41,6 +41,40 @@ class LingoRondeTest {
         );
     }
     @ParameterizedTest
+    @DisplayName("calcwoord")
+    @MethodSource("cw")
+    public void calcwoord(String beginwoord,List<String> raadbeurten,List<Character> calcword){
+        LingoRonde lingoRonde=new LingoRonde(new Word(beginwoord));
+        List<Raadbeurt>beurts = new ArrayList<>();
+        raadbeurten.forEach(e-> {
+            beurts.add(new Raadbeurt(e,lingoRonde));});
+        lingoRonde.setRaadbeurts(beurts);
+       assertEquals(calcword,lingoRonde.calcWord());
+
+
+    }
+    static Stream<Arguments>cw(){
+        return  Stream.of(
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aankant")
+                        ,List.of('a','a','n','v','o','e','r')),
+                Arguments.of("aanvoer", List.of("uitvoer")
+                        ,List.of('a',' ',' ','v','o','e','r')),
+                Arguments.of("vervoer",List.of("uitvoer","bijvoer")
+                        ,List.of('v',' ',' ','v','o','e','r')),
+                Arguments.of("aanvoer",List.of("aanvoer")
+                        ,List.of('a','a','n','v','o','e','r')),
+                Arguments.of("aanvoer",List.of()
+                        ,List.of('a',' ',' ',' ',' ',' ',' ')),
+                Arguments.of("aanvoer",List.of("stelen")
+                        ,List.of('a',' ',' ',' ',' ',' ',' ')),
+                Arguments.of("aanvoer",List.of("executie")
+                        ,List.of('a',' ',' ',' ',' ',' ',' '))
+
+        );
+    }
+
+
+    @ParameterizedTest
     @DisplayName("addraadbeurtfailure")
     @MethodSource("arb")
     void addraadbeurtTestbad(String beginwoord,List<String> raadbeurten,String testwoord){

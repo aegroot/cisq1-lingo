@@ -31,8 +31,8 @@ class RaadbeurtTest {
                 Arguments.of("testje","testen",List.of(CORRECT, CORRECT,CORRECT, CORRECT,PRESENT,ABSENT)),
                 Arguments.of("testen","mesten",List.of(ABSENT, CORRECT,CORRECT, CORRECT,CORRECT,CORRECT)),
                 Arguments.of("testen","testen",List.of(CORRECT, CORRECT,CORRECT, CORRECT,CORRECT,CORRECT)),
-                Arguments.of("feest","testen",List.of(INVALID,INVALID,INVALID,INVALID,INVALID)),
-                Arguments.of("feest","test",List.of(INVALID,INVALID,INVALID,INVALID,INVALID))
+                Arguments.of("testen","feest",List.of(INVALID,INVALID,INVALID,INVALID,INVALID)),
+                Arguments.of("test","feest",List.of(INVALID,INVALID,INVALID,INVALID,INVALID))
         );
     }
 

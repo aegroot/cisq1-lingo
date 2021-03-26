@@ -74,8 +74,6 @@ public class LingoSpel {
             return 6;
         } else if (currentLength() == 6) {
             return 7;
-        } else if (currentLength() == 7) {
-            return 5;
         }
         return 5;
 

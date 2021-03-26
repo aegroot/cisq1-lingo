@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.LingoSpel;
+import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.exception.WordLengthException;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
 import nl.hu.cisq1.lingo.trainer.domain.raadBeurt.Raadbeurt;
 import nl.hu.cisq1.lingo.words.domain.Word;
@@ -34,19 +35,18 @@ class LingoSpelTest {
     @Test
     @DisplayName("game is done")
     void checkDonerue() {
-        spel.addLingoRonde(r1);
-        r1.addRaadBeurt(new Word("aanvo"));
-        r1.addRaadBeurt(new Word("aanvo"));
-        r1.addRaadBeurt(new Word("aanvo"));
-        r1.addRaadBeurt(new Word("aanvo"));
-        r1.addRaadBeurt(new Word("aanvo"));
+        LingoRonde r2=new LingoRonde(new Word("speler"));
+        for (int i = 0; i < 5; i++) {
+            r2.addRaadBeurt(new Word("aanvo"));
+        }
+        spel.addLingoRonde(r2);
         assertTrue( spel.checkDone());
     }
     @ParameterizedTest
     @DisplayName("addLingoRonde throws WordLengthNotSupportedException")
     @MethodSource("ar")
     public void addLingoRondeTestwlns(String ronde){
-        assertThrows(WordLengthNotSupportedException.class,()->{
+        assertThrows(WordLengthException.class,()->{
             spel.addLingoRonde(new LingoRonde(new Word( ronde)));});
     }
     static Stream<Arguments>ar(){
@@ -80,14 +80,6 @@ class LingoSpelTest {
         );
     }
 
-
-    @Test
-    void checkDoneFalse() {
-
-        spel.addLingoRonde(r1);
-        r1.addRaadBeurt(new Word("aanvo"));
-        assertFalse(spel.checkDone());
-    }
 
     @ParameterizedTest
     @MethodSource("nl")

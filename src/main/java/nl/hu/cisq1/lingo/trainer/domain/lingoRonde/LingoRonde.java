@@ -50,11 +50,14 @@ public class LingoRonde {
     }
 
     public boolean checkvoltooid() {
+        /*
         StringBuilder sb = new StringBuilder();
         for (Character ch : calcWord()) {
             sb.append(ch);
         }
         String string = sb.toString();
+
+         */
         for (Raadbeurt raadbeurt:raadbeurts) {
             if (raadbeurt.getIngeven_woord().equals(woord.getValue())){return  true;}
         }
@@ -66,9 +69,8 @@ public class LingoRonde {
             throw new FinishedException();
         }
         if (countTries() < 5) {
-            if (!checkvoltooid()) {
                 raadbeurts.add(new Raadbeurt(word.getValue(), this));
-            }
+
         }
 
     }
@@ -78,8 +80,11 @@ public class LingoRonde {
         for (int i = 0; i < woord.getLength(); i++) {
             ArrayList<Mark> resultaten = new ArrayList<>();
             for (Raadbeurt raadbeurt : raadbeurts) {
-                Mark mark1 = Raadbeurt.compare(woord, new Word(raadbeurt.getIngeven_woord())).get(i);
-                resultaten.add(mark1);
+                if(i<raadbeurt.getIngeven_woord().length()){
+                    Mark mark1 = Raadbeurt.compare(woord, new Word(raadbeurt.getIngeven_woord())).get(i);
+                    resultaten.add(mark1);
+                }
+
             }
             if (resultaten.contains(Mark.CORRECT)) {
                 woord1.add(woord.getValue().charAt(i));
@@ -96,9 +101,6 @@ public class LingoRonde {
         this.lingogame = lingospel;
     }
 
-    public LingoSpel getLingogame() {
-        return lingogame;
-    }
 
     public Word getWoord() {
         return woord;
@@ -108,13 +110,7 @@ public class LingoRonde {
         this.raadbeurts = raadbeurts;
     }
 
-    public void setWoord(Word woord) {
-        this.woord = woord;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getId() {
         return id;
@@ -126,8 +122,8 @@ public class LingoRonde {
 
     @Override
     public String toString() {
-        return "LingoRonde{" +
-                "lingogame=" + lingogame +
+        return
+                "{lingogame=" + lingogame +
                 ", woord=" + woord +
                 ", raadbeurts=" + raadbeurts +
                 '}';

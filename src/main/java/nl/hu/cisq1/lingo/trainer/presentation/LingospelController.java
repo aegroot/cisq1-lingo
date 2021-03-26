@@ -38,19 +38,14 @@ public class LingospelController {
 
     @PostMapping("nextronde")
     public Voortgang nextronde(@RequestParam("id") Long id) {
-        try {
             return new Voortgang(service.nextronde(id));
-        }
-        catch (RoundNotFinishedException | CantContinueException | WordLengthException r ){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, r.getMessage());}
     }
     @PostMapping("addraadbeurt")
     public Voortgang addRonde(@RequestParam("id")Long id, @RequestParam("woord")String woord){
-        try {
+
             LingoSpel lingoSpel=service.addraadbeurt(id, woord);
-            return  new Voortgang(lingoSpel);}
-        catch (FinishedException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());}
+            return  new Voortgang(lingoSpel);
+
     }
 
 }

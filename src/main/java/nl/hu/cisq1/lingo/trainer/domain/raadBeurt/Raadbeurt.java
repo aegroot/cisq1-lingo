@@ -56,21 +56,20 @@ public class Raadbeurt {
         return respons;
     }
 
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getIngeven_woord() {
-        return ingeven_woord;
-    }
-
-    public void setIngeven_woord(String ingev_woord) {
-        this.ingeven_woord = ingev_woord;
+    public void setIngeven_woord(String ingeven_woord) {
+        this.ingeven_woord = ingeven_woord;
     }
 
     public void setLingoRonde(LingoRonde lingoRonde) {
         this.lingoRonde = lingoRonde;
+    }
+
+    public String getIngeven_woord() {
+        return ingeven_woord;
     }
 
     @Id
@@ -81,8 +80,7 @@ public class Raadbeurt {
 
     @Override
     public String toString() {
-        return "Raadbeurt{" +
-                "ingev_woord='" + ingeven_woord + '\'' +
+        return "{ingev_woord='" + ingeven_woord + '\'' +
                 //", lingoRonde=" + lingoRonde +
                 '}';
     }

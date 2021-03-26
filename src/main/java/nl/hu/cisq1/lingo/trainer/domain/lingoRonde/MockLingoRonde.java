@@ -28,16 +28,6 @@ public class MockLingoRonde implements Serializable {
         return calcWord;
     }
 
-    public void setRaadbeurts(List<MockRaadbeurt> raadbeurts) {
-        this.raadbeurts = raadbeurts;
-    }
 
-    public void setCalcWord(String calcWord) {
-        this.calcWord = calcWord;
-    }
-
-    public void setPunten(int punten) {
-        this.punten = punten;
-    }
 }
 

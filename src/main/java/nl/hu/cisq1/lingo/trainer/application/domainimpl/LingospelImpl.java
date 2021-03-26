@@ -33,59 +33,29 @@ public class LingospelImpl{
         return repository.save(lingospel);
     }
 
-
     public LingoSpel update(LingoSpel lingoSpel) {
         Optional<LingoSpel> optional = repository.findById(lingoSpel.getId());
-        if (optional.isPresent()) {
-            LingoSpel lingoSpel1 = optional.get();
-            lingoSpel1.setLingoRondes(lingoSpel.getLingoRondes());
-            return repository.save(lingoSpel1);
-        }
-        return null;
+        LingoSpel lingoSpel1= optional.orElseThrow();
+        lingoSpel1.setLingoRondes(lingoSpel.getLingoRondes());
+        return repository.save(lingoSpel1);
     }
 
     public LingoSpel nextronde(Long id){
         Optional<LingoSpel> optional = repository.findById(id);
-        if (optional.isPresent()){
-
-        LingoSpel spel =optional.get();
+        LingoSpel spel= optional.orElseThrow();
         LingoRonde ronde = new LingoRonde(new Word(wordRepository.provideRandomWord(spel.nextLength())));
-       spel.addLingoRonde(ronde);
-            update(spel);
-        return  spel;}
-        return  null;
+        spel.addLingoRonde(ronde);
+        update(spel);
+        return  spel;
     }
 
     public LingoSpel addraadbeurt(Long id,String woord){
         Optional<LingoSpel> lingoSpelOptional=repository.findById(id);
-        if (lingoSpelOptional.isPresent()){
-            LingoSpel lingoSpel=lingoSpelOptional.get();
-            LingoRonde lingoRonde= lingoSpel.getLastRonde();
-            lingoRonde.addRaadBeurt(new Word(woord));
-            return update(lingoSpel);
-
-    }
-        return  null;
-    }
-
-
-
-
-    public LingoSpel findbyid(Long id) {
-        Optional<LingoSpel> optional = repository.findById(id);
-        return optional.orElse(null);
+       LingoSpel lingoSpel= lingoSpelOptional.orElseThrow();
+        LingoRonde lingoRonde= lingoSpel.getLastRonde();
+        lingoRonde.addRaadBeurt(new Word(woord));
+        return update(lingoSpel);
 
     }
 
-
-
-
-    public List<LingoSpel> findall() {
-        return repository.findAll();
-    }
-
-    public void delete(LingoSpel lingoSpel) {
-        repository.delete(lingoSpel);
-
-    }
 }

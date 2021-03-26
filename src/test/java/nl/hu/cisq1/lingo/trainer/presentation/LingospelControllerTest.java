@@ -34,8 +34,6 @@ public class LingospelControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 }
