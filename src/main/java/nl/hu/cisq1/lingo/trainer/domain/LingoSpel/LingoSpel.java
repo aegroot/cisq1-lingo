@@ -2,8 +2,9 @@ package nl.hu.cisq1.lingo.trainer.domain.LingoSpel;
 
 import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.exception.CantContinueException;
 import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.exception.RoundNotFinishedException;
+import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.exception.WordLengthException;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
-import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
+import nl.hu.cisq1.lingo.trainer.domain.raadBeurt.Raadbeurt;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,13 +26,14 @@ public class LingoSpel {
     public int currentLength() {
         if (lingoRondes.isEmpty()) {
             return 5;
-        } else return lingoRondes.get(lingoRondes.size() - 1).getWoord().getLength();
+        } else return lingoRondes.get(lingoRondes.size()-1).getWoord().getLength();
+
     }
     public LingoSpel() {
     }
 
 
-    public void addLingoRonde(LingoRonde lingoRonde) {
+    public void addLingoRonde(LingoRonde lingoRonde)  {
         for (LingoRonde lingoRonde1:lingoRondes){
             if (!lingoRonde1.checkvoltooid()){
                 throw new RoundNotFinishedException();
@@ -40,25 +42,27 @@ public class LingoSpel {
         if (checkDone()){
                 throw  new CantContinueException();
         }
-        if (currentLength() == lingoRonde.getWoord().getLength()) {
-            lingoRondes.add(lingoRonde);
+        if (nextLength() != lingoRonde.getWoord().getLength()) {
+                throw  new WordLengthException(lingoRonde.getWoord().getLength());
         }
-        else throw new WordLengthNotSupportedException(currentLength());
+        lingoRondes.add(lingoRonde);
     }
-
     public LingoRonde getLastRonde(){
         return  lingoRondes.get(lingoRondes.size()-1);
     }
 
-
-
     public boolean checkDone() {
-
         for (LingoRonde lingorond : lingoRondes) {
-            if (lingorond.checkvoltooid() &&
-                    lingorond.calcWord().toString() != lingorond.getWoord().getValue()) {
+            List<Raadbeurt>raadbeurts=lingorond.getRaadbeurts();
+            List<String>raadbeurtsString=new ArrayList<>();
+            raadbeurts.forEach(e->{
+                raadbeurtsString.add(e.getIngeven_woord());
+            });
+
+            if(!raadbeurtsString.contains(lingorond.getWoord().getValue())&&lingorond.checkvoltooid()){
                 return true;
             }
+
         }
         return false;
     }

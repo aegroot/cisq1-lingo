@@ -6,6 +6,7 @@ import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.exception.CantContinueExceptio
 import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.exception.RoundNotFinishedException;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.exception.FinishedException;
+import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import nl.hu.cisq1.lingo.words.presentation.RandomWordController;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,9 @@ import java.util.Optional;
 @Transactional
 public class LingospelImpl{
     private final SpringLingoSpelRepository repository;
-    private  final RandomWordController wordRepository;
+    private  final WordService wordRepository;
 
-    public LingospelImpl(SpringLingoSpelRepository repository, RandomWordController wordRepository) {
+    public LingospelImpl(SpringLingoSpelRepository repository, WordService wordRepository) {
         this.repository = repository;
         this.wordRepository = wordRepository;
     }
@@ -42,16 +43,15 @@ public class LingospelImpl{
         }
         return null;
     }
+
     public LingoSpel nextronde(Long id){
         Optional<LingoSpel> optional = repository.findById(id);
         if (optional.isPresent()){
 
         LingoSpel spel =optional.get();
-        LingoRonde ronde = new LingoRonde(new Word(wordRepository.getRandomWord(spel.nextLength())));
-        try{ spel.addLingoRonde(ronde);
-            update(spel);}
-        catch (RoundNotFinishedException | CantContinueException r){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, r.getMessage());}
+        LingoRonde ronde = new LingoRonde(new Word(wordRepository.provideRandomWord(spel.nextLength())));
+       spel.addLingoRonde(ronde);
+            update(spel);
         return  spel;}
         return  null;
     }
@@ -60,14 +60,10 @@ public class LingospelImpl{
         Optional<LingoSpel> lingoSpelOptional=repository.findById(id);
         if (lingoSpelOptional.isPresent()){
             LingoSpel lingoSpel=lingoSpelOptional.get();
-
-        try {
             LingoRonde lingoRonde= lingoSpel.getLastRonde();
             lingoRonde.addRaadBeurt(new Word(woord));
             return update(lingoSpel);
-        }
-        catch (FinishedException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());}
+
     }
         return  null;
     }

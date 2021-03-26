@@ -55,9 +55,8 @@ public class LingoRonde {
             sb.append(ch);
         }
         String string = sb.toString();
-
         for (Raadbeurt raadbeurt:raadbeurts) {
-            if (raadbeurt.getIngeven_woord()==woord.getValue()){return  true;}
+            if (raadbeurt.getIngeven_woord().equals(woord.getValue())){return  true;}
         }
         return countTries() >= 5;
     }
@@ -125,4 +124,12 @@ public class LingoRonde {
         return raadbeurts;
     }
 
+    @Override
+    public String toString() {
+        return "LingoRonde{" +
+                "lingogame=" + lingogame +
+                ", woord=" + woord +
+                ", raadbeurts=" + raadbeurts +
+                '}';
+    }
 }

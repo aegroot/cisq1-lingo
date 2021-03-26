@@ -17,13 +17,9 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LingoRondeTest {
-    Word woord=new Word("fiets");
-    Word woordTest1=new Word("niets");
-    Word woordTest2=new Word("meets");
-    Word WoordTest3=new Word("klarinet");
 
     @ParameterizedTest
-    @DisplayName("")
+    @DisplayName("addraadbeurtsucces")
     @MethodSource("art")
     void addraadbeurtTestgood(String beginwoord,List<String> raadbeurten,String testwoord){
         LingoRonde lingoRonde=new LingoRonde(new Word(beginwoord));
@@ -45,6 +41,31 @@ class LingoRondeTest {
         );
     }
     @ParameterizedTest
+    @DisplayName("addraadbeurtfailure")
+    @MethodSource("arb")
+    void addraadbeurtTestbad(String beginwoord,List<String> raadbeurten,String testwoord){
+        LingoRonde lingoRonde=new LingoRonde(new Word(beginwoord));
+        List<Raadbeurt>beurts = new ArrayList<>();
+        raadbeurten.forEach(e-> {
+            beurts.add(new Raadbeurt(e,lingoRonde));});
+        lingoRonde.setRaadbeurts(beurts);
+        assertThrows(FinishedException.class,()->{
+            lingoRonde.addRaadBeurt(new Word(testwoord));});
+
+    }
+    static Stream<Arguments>arb(){
+        return  Stream.of(
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aankant","bijkant"),"verdenk"),
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aanvoer"),"verdenk"),
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvoer"),"verdenk"),
+                Arguments.of("aanvoer",List.of("uitvoer","aanvoer"),"verdenk",
+                Arguments.of("aanvoer",List.of("aanvoer"),"verdenk"),
+                Arguments.of("aanvoer", List.of("aanvoer","uitvoer","bijvoer","aanvaar","aankant"),"verdenk")
+
+        ));
+    }
+
+    @ParameterizedTest
     @DisplayName("berekenpunten")
     @MethodSource("bp")
     void berekenpunten(String beginwoord,List<String> raadbeurten,int outcome){
@@ -53,6 +74,7 @@ class LingoRondeTest {
         raadbeurten.forEach(e-> {
             beurts.add(new Raadbeurt(e,lingoRonde));});
         lingoRonde.setRaadbeurts(beurts);
+
         assertEquals(lingoRonde.berekenPunten(),outcome);
     }
     static Stream<Arguments>bp(){
@@ -64,59 +86,41 @@ class LingoRondeTest {
                 Arguments.of("aanvoer",List.of("aanvoer"),25),
                 Arguments.of("aanvoer", List.of("aanvoer","uitvoer","bijvoer","aanvaar","aankant"),25),
                 Arguments.of("aanvoer", List.of("bijvoer","uitvoer","aanvoer","aanvaar","aankant"),15)
+        );
+    }
 
+    @ParameterizedTest
+    @DisplayName("checkvoltooid")
+    @MethodSource("cv")
+    public void checkvoltooid(String beginwoord,List<String> raadbeurten,boolean check){
+        LingoRonde lingoRonde=new LingoRonde(new Word(beginwoord));
+        List<Raadbeurt>beurts = new ArrayList<>();
+        raadbeurten.forEach(e-> {
+            beurts.add(new Raadbeurt(e,lingoRonde));});
+        lingoRonde.setRaadbeurts(beurts);
+        assertEquals(lingoRonde.checkvoltooid(),check);
+
+
+    }
+    static Stream<Arguments>cv(){
+        return  Stream.of(
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aankant","bijkant"),true),
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aanvoer"),true),
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvoer"),true),
+                Arguments.of("aanvoer",List.of("uitvoer","aanvoer"),true),
+                Arguments.of("aanvoer",List.of("aanvoer"),true),
+                Arguments.of("aanvoer", List.of("aanvoer","uitvoer","bijvoer","aanvaar","aankant"),true),
+                Arguments.of("aanvoer", List.of("bijvoer","uitvoer","aanvaar","aankant"),false),
+                Arguments.of("aanvoer", List.of("bijvoer","uitvoer","aanvaar"),false),
+                Arguments.of("aanvoer", List.of("bijvoer","uitvoer"),false),
+                Arguments.of("aanvoer", List.of("bijvoer"),false)
 
         );
     }
 
 
 
-    @Test
-    @DisplayName("round is done when the word is revealed")
-    void checkvoltooid() {
-        LingoRonde lingoRonde=new LingoRonde(woord);
-        lingoRonde.addRaadBeurt(woordTest1);
-        System.out.println(lingoRonde.calcWord());
-        assertTrue(lingoRonde.checkvoltooid());
-    }
-    @Test
-    @DisplayName("round is not done if the word is  not revealed")
-    void checkonvoltooid(){
-        LingoRonde lingoRonde=new LingoRonde(woord);
-        lingoRonde.addRaadBeurt(woordTest2);
-        System.out.println(lingoRonde.calcWord());
-        assertFalse(lingoRonde.checkvoltooid());
-    }
-    @Test
-    @DisplayName("round is done when the player tred 5 times")
-    void check5tries(){
-        LingoRonde lingoRonde=new LingoRonde(woord);
-        lingoRonde.addRaadBeurt(woordTest2);
-        lingoRonde.addRaadBeurt(woordTest2);
-        lingoRonde.addRaadBeurt(woordTest2);
-        lingoRonde.addRaadBeurt(woordTest2);
-        lingoRonde.addRaadBeurt(woordTest2);
-        assertTrue(lingoRonde.checkvoltooid());
-    }
-    @Test
-    @DisplayName("round is done when the player tried 5 times")
-    void checklessthan5tries(){
-        LingoRonde lingoRonde=new LingoRonde(woord);
-        lingoRonde.addRaadBeurt(woordTest2);
-      assertFalse(lingoRonde.checkvoltooid());
-    }
 
-    @Test
-    @DisplayName("round is done at 5 tries and the word is revealed")
-    void checkBoth(){
-        LingoRonde lingoRonde=new LingoRonde(woord);
-        lingoRonde.addRaadBeurt(woordTest1);
-        lingoRonde.addRaadBeurt(woordTest2);
-        lingoRonde.addRaadBeurt(woordTest2);
-        lingoRonde.addRaadBeurt(woordTest2);
-        lingoRonde.addRaadBeurt(woordTest2);
-        System.out.println(lingoRonde.calcWord());
-        assertTrue(lingoRonde.checkvoltooid());
-    }
+
 
 }

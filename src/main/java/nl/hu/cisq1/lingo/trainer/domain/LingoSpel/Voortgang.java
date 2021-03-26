@@ -9,13 +9,12 @@ import nl.hu.cisq1.lingo.words.domain.Word;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Resultaat {
+public class Voortgang {
     private Long id;
     private List<MockLingoRonde>lingoRondes;
     private int currentLength;
     private Boolean done;
-
-    public Resultaat(LingoSpel spel){
+    public Voortgang(LingoSpel spel){
         List<LingoRonde>lingoRondes=spel.getLingoRondes();
         List<MockLingoRonde>mockLingoRondes=new ArrayList<>();
         for(LingoRonde lingoRonde:lingoRondes){
@@ -34,9 +33,24 @@ public class Resultaat {
          mockLingoRondes.add(new MockLingoRonde(mockRaadbeurts,string,lingoRonde.berekenPunten()));
         }
         this.id= spel.getId();
-
         this.lingoRondes=mockLingoRondes;
         this.currentLength=spel.currentLength();
         this.done=spel.checkDone();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getCurrentLength() {
+        return currentLength;
+    }
+
+    public Boolean getDone() {
+        return done;
+    }
+
+    public List<MockLingoRonde> getLingoRondes() {
+        return lingoRondes;
     }
 }
