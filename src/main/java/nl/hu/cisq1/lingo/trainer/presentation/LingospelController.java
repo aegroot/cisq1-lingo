@@ -11,11 +11,11 @@ import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.exception.FinishedException;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("lingospel")
@@ -40,6 +40,17 @@ public class LingospelController {
     public Voortgang nextronde(@RequestParam("id") Long id) {
             return new Voortgang(service.nextronde(id));
     }
+    @GetMapping("findall")
+    public List<Voortgang>findall(){
+        service.findall();
+        List<Voortgang>voortgangs=new ArrayList<>();
+        for (LingoSpel spel:service.findall()){
+            voortgangs.add(new Voortgang(spel));
+        }
+        return  voortgangs;
+    }
+
+    
     @PostMapping("addraadbeurt")
     public Voortgang addRonde(@RequestParam("id")Long id, @RequestParam("woord")String woord){
 

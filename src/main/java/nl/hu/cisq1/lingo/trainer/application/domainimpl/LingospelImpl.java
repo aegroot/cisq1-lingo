@@ -57,5 +57,8 @@ public class LingospelImpl{
         return update(lingoSpel);
 
     }
+    public List<LingoSpel>findall(){
+        return repository.findAll();
+    }
 
 }
