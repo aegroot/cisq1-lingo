@@ -9,6 +9,8 @@ illegally acting as administrative functions
 ###counter-measures
 the absence and simplicity of the program, the program does not need any authentication/
 
+even if authentication is present, only 1 role wil exist
+
 ##injection
 
 ###description
@@ -20,6 +22,6 @@ The business impact depends on the needs of the application and data.
 
 
 ###counter-measures
-the customer is resticted in sending data to the server, only strings are accepted
+the customer is restricted in sending data to the server, only strings are accepted
 
-even if authentication has been added
+ if authentication has been added, players will only have acces to their own games

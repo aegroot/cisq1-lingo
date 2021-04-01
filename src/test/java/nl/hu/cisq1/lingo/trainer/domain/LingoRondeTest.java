@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.LingoRonde;
+import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.exception.BadWordException;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.exception.FinishedException;
 import nl.hu.cisq1.lingo.trainer.domain.raadBeurt.Raadbeurt;
 import nl.hu.cisq1.lingo.words.domain.Word;
@@ -72,12 +73,39 @@ class LingoRondeTest {
 
         );
     }
+    @ParameterizedTest
+    @DisplayName("addraadbeurtfailureBadWord")
+    @MethodSource("arb")
+    void addraadbeurtTestBadWord(String beginwoord,List<String> raadbeurten,String testwoord){
+        LingoRonde lingoRonde=new LingoRonde(new Word(beginwoord));
+        List<Raadbeurt>beurts = new ArrayList<>();
+        raadbeurten.forEach(e-> {
+            beurts.add(new Raadbeurt(e,lingoRonde));});
+        lingoRonde.setRaadbeurts(beurts);
+        assertThrows(BadWordException.class,()->{
+            lingoRonde.addRaadBeurt(new Word(testwoord));
+        });
+
+    }
+
+    static Stream<Arguments>arb(){
+        return  Stream.of(
+                Arguments.of("aanvoer", List.of("bijvoer","aanvaar","aankant","bijkant"),"@@@@@"),
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar"),"verdenking"),
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvoer"),"r0mio33"),
+                Arguments.of("aanvoer",List.of("uitvoer","aanvoer"),"verde8k"),
+                Arguments.of("aanvoer",List.of("aanvoir"),"b3stPassword4ver"),
+                Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aankant"),"Verdenk")
+                );
+    }
+
+
 
 
     @ParameterizedTest
-    @DisplayName("addraadbeurtfailure")
-    @MethodSource("arb")
-    void addraadbeurtTestbad(String beginwoord,List<String> raadbeurten,String testwoord){
+    @DisplayName("addraadbeurtfailureFinished")
+    @MethodSource("arf")
+    void addraadbeurtTestFinished(String beginwoord,List<String> raadbeurten,String testwoord){
         LingoRonde lingoRonde=new LingoRonde(new Word(beginwoord));
         List<Raadbeurt>beurts = new ArrayList<>();
         raadbeurten.forEach(e-> {
@@ -87,7 +115,7 @@ class LingoRondeTest {
             lingoRonde.addRaadBeurt(new Word(testwoord));});
 
     }
-    static Stream<Arguments>arb(){
+    static Stream<Arguments>arf(){
         return  Stream.of(
                 Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aankant","bijkant"),"verdenk"),
                 Arguments.of("aanvoer", List.of("uitvoer","bijvoer","aanvaar","aanvoer"),"verdenk"),

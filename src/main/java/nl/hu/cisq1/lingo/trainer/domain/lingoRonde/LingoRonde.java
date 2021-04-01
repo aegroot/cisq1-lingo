@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain.lingoRonde;
 
 import nl.hu.cisq1.lingo.trainer.domain.LingoSpel.LingoSpel;
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
+import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.exception.BadWordException;
 import nl.hu.cisq1.lingo.trainer.domain.lingoRonde.exception.FinishedException;
 import nl.hu.cisq1.lingo.trainer.domain.raadBeurt.Raadbeurt;
 import nl.hu.cisq1.lingo.words.domain.Word;
@@ -65,6 +66,10 @@ public class LingoRonde {
     }
 
     public void addRaadBeurt(Word word) {
+        if(!word.getValue().matches("[a-z]+")||word.getLength()>9){
+            throw  new BadWordException();
+        }
+
         if (checkvoltooid()){
             throw new FinishedException();
         }
